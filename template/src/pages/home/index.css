@@ -1,0 +1,17 @@
+#homePage main {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+#homePage main a {
+    display: inline-flex;
+    background-color: #FFF;
+    border: 1px solid #AAA;
+    border-radius: 4px;
+    color: #000;
+    flex-direction: column;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}

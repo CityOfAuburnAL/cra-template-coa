@@ -1,0 +1,25 @@
+{
+    "name": "cra-template-coa",
+    "version": "1.1.1",
+    "keywords": [
+      "react",
+      "create-react-app",
+      "template"
+    ],
+    "description": "The base template for Create React App - customized for City of Auburn.",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/CityOfAuburnAL/cra-template-coa.git"
+    },
+    "license": "MIT",
+    "engines": {
+      "node": ">=10"
+    },
+    "bugs": {
+      "url": "https://github.com/facebook/create-react-app/issues"
+    },
+    "files": [
+      "template",
+      "template.json"
+    ]
+  }
