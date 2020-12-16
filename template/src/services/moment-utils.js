@@ -1,3 +1,4 @@
+/** If using, be sure to `yarn add moment` */
 import moment from 'moment';
 
 export const months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

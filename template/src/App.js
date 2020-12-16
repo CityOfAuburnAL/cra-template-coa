@@ -10,11 +10,12 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 //Components
 import { SnackbarProvider } from 'notistack';
 import AppSkeleton from './components/AppSkeleton';
+//Utilities
+import { coaFetch } from './services/coa-fetch';
 //Content Pages
 import HomePage from './pages/home';
 import PermissionsPage from './pages/permissions';
 import NotFoundPage from './pages/404';
-import { coaFetch } from './services/coa-fetch';
 
 //Layout styles
 const theme = createMuiTheme({

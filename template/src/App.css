@@ -38,3 +38,9 @@
         flex-direction: column;
     }
   }
+
+/* List / ListItems - Used for displaying items for selection/editing/deleting */
+.list {
+  background-color: #FFF;
+  box-shadow: 1px 1px solid #CCC;
+}
