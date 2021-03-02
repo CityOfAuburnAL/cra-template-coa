@@ -6,10 +6,11 @@ import ListItem from '@material-ui/core/ListItem';
 import { useEffect, useState } from 'react';
 import { useStateStore } from '../../services/State';
 import { userLogout } from '../../services/coa-authorization';
-import { Menu, MenuItem, AppBar, Toolbar, IconButton, Hidden, SwipeableDrawer, Drawer } from '@material-ui/core';
+import { Menu, MenuItem, AppBar, Toolbar, IconButton, Hidden, SwipeableDrawer, Drawer, LinearProgress } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useHistory } from 'react-router';
+import { usePromiseTracker } from 'react-promise-tracker';
 
 //Layout styles
 const drawerWidth = 240;
@@ -71,6 +72,7 @@ function AppSkeleton({ pages, children }) {
   const [accountIcon, setAccountIcon] = useState(null);
   const menuList = pages || [];
   const [user] = useStateStore('userProfile');// userAuthStatus("pressrelease");
+  const { promiseInProgress } = usePromiseTracker();
   
   useEffect(() => {
     history.listen(() => {
@@ -143,6 +145,7 @@ function AppSkeleton({ pages, children }) {
             </Menu>
           </div>
         </Toolbar>
+        {promiseInProgress && (<LinearProgress />)}
       </AppBar>
       <Hidden mdUp>
         <SwipeableDrawer

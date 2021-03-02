@@ -1,3 +1,5 @@
+import { trackPromise } from 'react-promise-tracker';
+
 /**
  * Custom fetch function providing default options and error handling
  * @param {string} url url to fetch
@@ -19,9 +21,11 @@ export const coaFetch = (url, options) => {
         headers: { ...defaultOptions.headers, ...options.headers }
     }
 
-    return fetch(url, options)
-        .then(handleResponse, handleNetworkError)
-        .catch(handleNetworkError);
+    return trackPromise(
+        fetch(url, options)
+            .then(handleResponse, handleNetworkError)
+            .catch(handleNetworkError)
+    );
 }
 
 function handleResponse (response) {
