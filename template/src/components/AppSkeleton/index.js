@@ -11,6 +11,10 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useHistory } from 'react-router';
 import { usePromiseTracker } from 'react-promise-tracker';
+import usePushNotification from '../PushNotificationSubscriber';
+import * as serviceWorkerRegistration from '../../serviceWorkerRegistration';
+import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
+import { useStorageState } from 'react-storage-hooks';
 
 //Layout styles
 const drawerWidth = 240;
@@ -66,13 +70,31 @@ const useStyles = makeStyles(theme => ({
 function AppSkeleton({ pages, children }) {
   const history = useHistory(); // TODO - look into NavLink or useLocation?
   const classes = useStyles();
+  /* Mobile Phone drawer controller (swipe) */
   const [drawer, setDrawer] = useState(false);
-  const [persistDrawer, setPersistDrawer] = useState(false);
+  /* Desktop drawer, toggle preference */
+  const [persistDrawer, setPersistDrawer] = useStorageState(localStorage, 'persist-drawer', false);
   const [currentPath, setCurrentPath] = useState(history.location.pathname.replace(/\/$/, '')); //we use currentPath === page.path in a number of places, this breaks when a trailing slash is present
   const [accountIcon, setAccountIcon] = useState(null);
   const menuList = pages || [];
   const [user] = useStateStore('userProfile');// userAuthStatus("pressrelease");
+  const [pushNotifications, togglePushNotifications] = usePushNotification();
   const { promiseInProgress } = usePromiseTracker();
+  const [updatedSWVersion, setUupdatedSWVersion] = useState(false);
+
+  serviceWorkerRegistration.register({
+    onUpdate: setUupdatedSWVersion
+  });
+
+  const handleSWRegistrationUpdate = () => {
+    let refreshing;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (refreshing) return;
+      window.location.reload();
+      refreshing = true;
+    });
+    updatedSWVersion.waiting.postMessage({type: 'SKIP_WAITING'})
+  }
   
   useEffect(() => {
     history.listen(() => {
@@ -86,7 +108,7 @@ function AppSkeleton({ pages, children }) {
         setPersistDrawer(!window.globalPersistDrawer)
       }
     });
-  }, [history]);
+  }, [history, setPersistDrawer]);
   
   useEffect(() => {
     window.globalPersistDrawer = persistDrawer;
@@ -118,6 +140,11 @@ function AppSkeleton({ pages, children }) {
           </IconButton>
           <h1 className={classes.grow}>City of Auburn &mdash; {`${pages.find(e => e.path === currentPath)?.name || 'cra-template-coa'}`}</h1>
           <div>
+            {updatedSWVersion && (
+              <IconButton title="New Version Available" onClick={handleSWRegistrationUpdate} style={{color: '#FFF'}}>
+                <SystemUpdateAltIcon></SystemUpdateAltIcon>
+              </IconButton>
+            )}
             <IconButton
               aria-owns={accountIcon ? 'menu-appbar' : null}
               aria-haspopup="true"
@@ -141,6 +168,7 @@ function AppSkeleton({ pages, children }) {
               onClose={() => { setAccountIcon(null)}}
             >
               <MenuItem onClick={() => { setAccountIcon(null)}}>{user.email}</MenuItem>
+              <MenuItem title="Experimental" onClick={() => { togglePushNotifications(); setAccountIcon(null) }}>Toggle Push Notifications: {(pushNotifications ? 'Off' : 'On')}</MenuItem>
               <MenuItem onClick={userLogout}>Logout</MenuItem>
             </Menu>
           </div>

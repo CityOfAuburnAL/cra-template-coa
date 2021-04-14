@@ -11,21 +11,60 @@
 
 **External Dependancies**:
 
-- [api2.auburnalabama.org/departments/apidocs](https://api2.auburnalabama.org/departments/apidocs) for data access layer
-
-- SQL server 'sql', Database COA, for data storage. Within the police scheme, tables: OfficerActivity, OfficerReport, OfficerReportPersonnel. Views: Supervisors. Procs: OfficerActivityCache, OfficerActivitySupervisorReport, OfficerActivityCustomReport
-
-- Stored Procedure within COA database reads from WFCDB8 (Kronos) database for supervisor relationships.
-
-- Stored Procedure within COA database uses linked server `sql2016` with PSReports credentials to access databases [CADSQL_NET], [SS_ALRecords_Accident], [SS_ALRecords_Incident], [SS_ALRecords_Arrest]
+- <https://api2.auburnalabama.org/department/apidocs> for data access layer
+- SQL - Server: 'sql', Database: COA
+  - Schema: TODO
+  - Tables: TODO
+  - Views: None
+  - Stored Procedure: None
 
 **Related Apps**:
 
-- TBD
+- TODO
 
 ---
 
-# Development Notes
+# Platform Notes
+
+This is based on a custom template for CRA (create-react-app)
+
+## Known Issues
+
+1. If the user leaves the browser window open for long enough, it's possible for the coa-authorization cookies to expire but coa-fetch will not retrigger.
+2. After an update to the application the push notification status is off and re-enabling it is flaky.
+
+## New features added
+
+1. N/A
+
+## Previous Projects
+
+1. [cra-template-coa](https://github.com/CityOfAuburnAL/cra-template-coa)
+2. [my-applications-community-services](https://auburnal@bitbucket.org/cityofauburnal/my-applications-community-services.git)
+3. [my-library](https://bitbucket.org/cityofauburnal/my-library/src)
+
+## New Project
+
+1. `npx create-react-app my-cra-template-coa --template cra-template-coa`
+2. Rename everything with cra-template-coa
+    - README.md
+    - package.json
+    - manifest.json
+    - web.config
+    - index.html
+    - deploy.js
+    - App.js
+    - index.js
+    - service-worker.js
+3. Sub-route is defined in the following places, do not use absolute links
+    - package.json
+    - web.config
+    - App.js
+    - service-worker.js
+
+--
+
+# Project Notes
 
 ## Bugs (In-Development Status)
 
@@ -33,35 +72,23 @@
 
 ## Missing Functionality (In, I over-promised status)
 
-1. Error handling
+1. N/A
 
 ## Desired Functionality (Good thing I didn't promise, status)
 
-1. Auditing
+1. N/A
 
-# Getting Started
+## Getting Started
 
-For this one, I just copied from my-bodycam
+Get the latest source
 
-`git clone https://github.com/CityOfAuburnAL/react-boilerapp-noredux.git ./`
+`git clone https://bitbucket.org/cityofauburnal/my-library/src`
 
-(optionally)
+Commands
 
-Updated packages, verify integirty commit and push changes
-
-`delete .git\`
-
-`git init`
-
-`git add .`
-
-`git commit`
-
-# Commands
-
-`npm start`
-`npm run build`
-`npm run deploy`
+- `yarn start`
+- `yarn build`
+- `yarn deploy`
 
 # References
 
@@ -83,30 +110,34 @@ Updated packages, verify integirty commit and push changes
 
 # Packages
 
+- react-promise-tracker
+- react-storage-hooks
+- workbox-*
+
 ## Redux
 
-npm install --save redux
-npm install --save redux-react
-npm install --save redux-thunk
-npm install --save redux-logger
+yarn install --save redux
+yarn install --save redux-react
+yarn install --save redux-thunk
+yarn install --save redux-logger
 
 ### Auth
 
-npm install --save @casl/react @casl/ability
+yarn install --save @casl/react @casl/ability
 
 ## Router
 
-npm install --save react-router
-npm install --save history
+yarn install --save react-router
+yarn install --save history
 
 ## UI
 
-npm install --save @material-ui/core
-npm install --save @material-ui/icons
+yarn install --save @material-ui/core
+yarn install --save @material-ui/icons
 
 ## DEV
 
-npm install --save-dev eslint eslint-loader babel-loader babel-eslint eslint-plugin-react
+yarn install --save-dev eslint eslint-loader babel-loader babel-eslint eslint-plugin-react
 
 # Guides
 

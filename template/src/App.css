@@ -44,3 +44,20 @@
   background-color: #FFF;
   box-shadow: 1px 1px solid #CCC;
 }
+.list .secondary-action-2 {
+  padding-right: 80px; /* (16 + 32 + 32) */
+}
+.list svg {
+  vertical-align: middle;
+}
+.MuiList-root.selectable .MuiListItem-root {
+  cursor: pointer;
+}
+
+/* Close button for modal */
+button.closeButton {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  color: #C3C3C3;
+}
